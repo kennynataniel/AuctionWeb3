@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
@@ -64,3 +65,7 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+=======
+# AuctionWeb3
+AuctionWeb3 for Pelita Bangsa Academy &amp; Hackathon
+>>>>>>> cea94d1f2b64d5284d2e9763137d7ed3b8f3df68
