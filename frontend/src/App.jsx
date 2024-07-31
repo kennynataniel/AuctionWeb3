@@ -7,6 +7,7 @@ import About from './Components/About/About';
 import Product from './Components/Product/Product';
 import Contact from './Components/Contact/Contact';
 import Footer from './Components/Footer/Footer';
+import './App.css'
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
       <Navbar/>
       <Hero/>
       <div className='container'>
-        <Title subTitle='Our PROGRAM' title='What We Offer'/>
+        <Title subTitle='' title='What We Offer'/>
         <Programs/>
         <About/>
-        <Title subTitle='Product' title='Product List'/>
+        <Title subTitle='Product' title='Popular Items'/>
         <Product/>
         <Title subTitle='Contact Us' title='Get In Touch'/>
         <Contact/>

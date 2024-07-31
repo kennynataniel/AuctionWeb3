@@ -2,7 +2,19 @@ import React, { useEffect, useState } from 'react'
 import './Navbar.css'
 import metamaskLogo from '../../assets/MetamaskLogo.png'
 import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png'
-import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Link } from 'react-scroll'
+import { NavLink } from 'react-router-dom';
+
+const NAV__LINKS = [
+{
+    display: 'Home',
+    url: '/home'
+},
+{
+    display: 'Market',
+    url: '/market'
+},
+]
 
 
 const Navbar = () => {
@@ -53,14 +65,13 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`container ${sticky ? 'dark-nav' : ''}`}>
+        <nav className={`containerNavBar ${sticky ? 'dark-nav' : ''}`}>
             <img src={logo} alt="" className='logo' />
             <ul>
                 <li><Link to='hero' smooth={true} offset={0} duration={500}> Home </Link></li>
-                <li><Link to='product' smooth={true} offset={0} duration={500}> Product </Link></li>
+                <li><Link to='product' smooth={true} offset={0} duration={500}> Market </Link></li>
                 <li><Link to='contact' smooth={true} offset={0} duration={500}> Contact Us </Link></li>
-                <li><img className='metamasklogo' src={metamaskLogo} alt="" />
-                    <button onClick={connectWallet} className='btn'>
+                <li><button onClick={connectWallet} className='btn btn-light'>
                         <span className='is-link has-text-weight-bold'>
                             {walletAddress.length > 0 ? `Connected: ${walletAddress.substring(
                                 0,
