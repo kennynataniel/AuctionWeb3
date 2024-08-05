@@ -1,26 +1,23 @@
 import React , {useState} from 'react'
 import ethImg from '../../assets/ETH.png'
 import Modal from '../Modal/Modal'
-import {Link} from 'react-router-dom'
 import { ethers } from 'ethers';
-
 
 const Productcard = (props) => {
 
-  const {title, id, currentBid, creatorImg, imgUrl, creator } = props.item;
+  const {title, currentBid, imgUrl, creator, startDate, endDate } = props.item;
 
   const [showModal, setShowModal] = useState(false);
   const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
-
   const connectMetaMask = async () => {
     if (window.ethereum) {
 
         if (isConnecting) {
             console.log('Connection request is already in progress. Please wait.');
-            return; // Prevent making a new request
+            return;
         }
 
         const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -48,9 +45,6 @@ const Productcard = (props) => {
     <h5 className="nft__title">{title}</h5>
 
     <div className="creator__info-wrapper d-flex gap-3">
-      <div className="creator__img">
-        <img src={creatorImg} alt="" className="w-100" />
-      </div>
       <div className="creator__info w-100 d-flex align-items-center justify-content-between">
         <div>
           <h6>Created By</h6>
@@ -64,14 +58,30 @@ const Productcard = (props) => {
       </div>
     </div>
 
+    <div className="creator__info-wrapper d-flex gap-3">
+      <div className="creator__info w-100 d-flex align-items-center justify-content-between">
+        <div>
+          <h6>Started Date</h6>
+          <p>{startDate}</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="creator__info-wrapper d-flex gap-3">
+      <div className="creator__info w-100 d-flex align-items-center justify-content-between">
+        <div>
+          <h6>End Date</h6>
+          <p>{endDate}</p>
+        </div>
+      </div>
+    </div>
+
     <div className="mt-3 d-flex align-items-center justify-content-between">
         <button className="bid__btn d-flex align-items-center gap-1" 
         onClick={connectMetaMask}>
           <i class="ri-shopping-bag-line"></i>Place Bid
         </button>
         {showModal && <Modal setShowModal={setShowModal} item={props.item}/>}
-
-
     </div>
   </div>
 </div>

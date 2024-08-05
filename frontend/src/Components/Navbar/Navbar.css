@@ -37,11 +37,8 @@ li:hover{
     background-color: white;
 }
 
-/* .metamasklogo{
-    width: 40px;
-    height: 40px;
-    position: fixed;
-    padding-left: 10px;
-    padding-right: 5px;
-} */
+.custom-link {
+    text-decoration: none; /* Remove default underline */
+    color: inherit; /* Inherit color from parent */
+  }
  

@@ -1,7 +1,6 @@
 import React from 'react'
 import './Hero.css'
 import {Container, Row, Col } from 'reactstrap'
-import {Link} from 'react-router-dom'
 import heroImg from '../../assets/NFT.png'
 
 const Hero = () => {
@@ -22,13 +21,7 @@ const Hero = () => {
             <div className="hero__btns d-flex align-items-center gap-4">
               <button className='explore__btn d-flex align-items-center gap-2'>
                 <i class="ri-rocket-line"></i>{" "}
-                {/* <Link to="/market">Explore</Link> */}
-                Explore
-              </button>
-              <button className='create__btn d-flex align-items-center gap-2'>
-                <i class="ri-ball-pen-line"></i>
-                {/* <Link to="/create">Explore</Link> */}
-                Explore
+                Explore Product
               </button>
             </div>
           </div>

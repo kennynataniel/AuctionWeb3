@@ -83,3 +83,10 @@
 .close__modal{
     cursor: pointer;
 }
+
+
+/* Custom-error */
+
+.error-message{
+    color:red;
+}

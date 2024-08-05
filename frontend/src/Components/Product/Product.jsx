@@ -1,7 +1,7 @@
 import React from 'react'
 import './Product.css'
 import {Container, Row, Col} from 'reactstrap'
-import {Link} from 'react-router-dom'
+
 import Productcard from '../Product-card/Productcard'
 import {NFT__DATA} from '../../assets/data/data.js'
 

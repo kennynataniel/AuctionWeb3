@@ -1,28 +1,28 @@
 import React, { useState } from 'react'
 import './Modal.css'
-import { NFT__DATA } from '../../assets/data/data.js'
 
 const Modal = ({ setShowModal, item }) => {
 
-    const [nftData, setNftData] = useState(NFT__DATA);
-    const { title, id, currentBid, creatorImg, imgUrl, creator } = item;
-
+    const { title, currentBid } = item;
 
     const [bidValue, setBidValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (event) => {
-        setBidValue(event.target.value);
+        const value = event.target.value;
+        setBidValue(value);
     };
 
-    const handleBidClick = () => {
-        const updatedData = NFT__DATA.map(item => {
-            if (item.id === id) {
-                return { ...item, currentBid: parseFloat(bidValue) };
-            }
-            return item;
-        });
-        setNftData(updatedData);
-        console.log(updatedData);
+    const handleSubmit = () => {
+
+        const numericBidValue = parseFloat(bidValue);
+        const numericCurrentBid = parseFloat(currentBid);
+
+        if (isNaN(numericBidValue) || numericBidValue <= numericCurrentBid) {
+            setErrorMessage(`Bid must be greater than ${currentBid} ETH`);
+        } else {
+
+        }
     };
 
     return (
@@ -31,7 +31,7 @@ const Modal = ({ setShowModal, item }) => {
                 <span className="close__modal">
                     <i class="ri-close-line" onClick={() => setShowModal(false)}></i>
                 </span>
-                <h6 className="text-center text-light">Place a Bid</h6>
+                <h6 className="text-center text-light">Place a Bid - {title}</h6>
                 <p className="text-center text-light">
                     You must bid at least <span className="money">{currentBid} ETH</span></p>
                 <div className="input__item mb-4">
@@ -44,16 +44,15 @@ const Modal = ({ setShowModal, item }) => {
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
-                    <p className="TitleModal">Service Fee</p>
-                    <span className="money">{currentBid * 1 / 100} ETH</span>
-                </div>
-
-                <div className="d-flex align-items-center justify-content-between">
                     <p className="TitleModal">Total Bid Amount</p>
-                    <span className="money">{currentBid * 1 / 100 + currentBid} ETH</span>
+                    <span className="money">{bidValue} ETH</span>
                 </div>
 
-                <button className="place__bid-btn" onClick={handleBidClick}>
+                {errorMessage && (
+                    <p className="error-message">{errorMessage}</p>
+                )}
+
+                <button className="place__bid-btn" onClick={handleSubmit}>
                     Place a Bid
                 </button>
             </div>

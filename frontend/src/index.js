@@ -1,16 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import Create from './Components/Create/Create';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as router }  from 'react-router-dom';
 import "remixicon/fonts/remixicon.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+
+import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>
+  },
+  {
+    path: "/create",
+    element: <Create/>
+  },
+
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 

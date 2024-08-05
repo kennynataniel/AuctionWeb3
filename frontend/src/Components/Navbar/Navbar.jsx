@@ -1,31 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import './Navbar.css'
-import metamaskLogo from '../../assets/MetamaskLogo.png'
-import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png'
-import { Link } from 'react-scroll'
-const NAV__LINKS = [
-{
-    display: 'Home',
-    url: '/home'
-},
-{
-    display: 'Market',
-    url: '/market'
-},
-]
-
+import React, { useEffect, useState } from 'react';
+import './Navbar.css';
+import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
-
     const [sticky, setSticky] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
     const [isRequestPending, setIsRequestPending] = useState(false);
 
     useEffect(() => {
-        window.addEventListener('scroll', () => {
+        const handleScroll = () => {
             window.scrollY > 500 ? setSticky(true) : setSticky(false);
-        })
-    }, [])
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleAccountsChanged = (accounts) => {
+            if (accounts.length > 0) {
+                setWalletAddress(accounts[0]);
+                localStorage.setItem('walletAddress', accounts[0]);
+            } else {
+                setWalletAddress('');
+                localStorage.removeItem('walletAddress');
+            }
+        };
+
+        if (window.ethereum) {
+            window.ethereum.request({ method: 'eth_accounts' }).then(handleAccountsChanged);
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+        }
+
+        return () => {
+            if (window.ethereum) {
+                window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+            }
+        };
+    }, []);
 
     const connectWallet = async () => {
         if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
@@ -36,52 +54,63 @@ const Navbar = () => {
 
             setIsRequestPending(true);
             try {
-                // Metamask is installed
                 const accounts = await window.ethereum.request({
                     method: "eth_requestAccounts",
                 });
-                if(window.ethereum){
-                    console.log(await window.ethereum.enable());
-                }
                 if (accounts.length > 0) {
                     setWalletAddress(accounts[0]);
-                    console.log(accounts[0]);
-                }
-                else {
-                    console.log("Connect to Metamask using the Connect button")
+                    localStorage.setItem('walletAddress', accounts[0]);
+                    console.log(`Connected: ${accounts[0]}`);
+                } else {
+                    console.log("No accounts found. Connect to MetaMask using the Connect button.");
                 }
             } catch (err) {
-                console.error(err.message);
-            }
-            finally {
+                console.error('Error connecting to MetaMask:', err);
+                if (err.message.includes('User rejected the request')) {
+                    alert('Connection request was rejected by the user.');
+                } else {
+                    alert('An error occurred while connecting to MetaMask. Please try again.');
+                }
+            } finally {
                 setIsRequestPending(false);
             }
         } else {
-            // Metamask is not installed
-            console.log("Please install Metamask");
+            console.log("Please install MetaMask");
+            alert('MetaMask is not installed. Please install MetaMask to proceed.');
         }
     };
 
     return (
         <nav className={`containerNavBar ${sticky ? 'dark-nav' : ''}`}>
-            <img src={logo} alt="" className='logo' />
+            <img src={logo} alt="Logo" className='logo' />
             <ul>
-                <li><Link to='hero' smooth={true} offset={0} duration={500}> Home </Link></li>
-                <li><Link to='product' smooth={true} offset={0} duration={500}> Market </Link></li>
-                <li><Link to='Create' smooth={true} offset={0} duration={500}> Create </Link></li>
-                <li><Link to='contact' smooth={true} offset={0} duration={500}> Contact Us </Link></li>
-                <li><button onClick={connectWallet} className='btn btn-light'>
+                <li>
+                    <ScrollLink to='hero' smooth={true} offset={0} duration={500}>
+                        <RouterLink className='custom-link' to='/'> Home </RouterLink>
+                    </ScrollLink>
+                </li>
+                <li>
+                    <ScrollLink to='product' smooth={true} offset={0} duration={500}> Market </ScrollLink>
+                </li>
+                <li>
+                    <RouterLink onClick={connectWallet} className='custom-link' to='/create' > Create </RouterLink>
+                </li>
+                <li>
+                    <ScrollLink to='contact' smooth={true} offset={0} duration={500}> Contact Us </ScrollLink>
+                </li>
+                <li>
+                    <button onClick={connectWallet} className='btn btn-light'>
                         <span className='is-link has-text-weight-bold'>
-                            {walletAddress.length > 0 ? `Connected: ${walletAddress.substring(
-                                0,
-                                6)}...${walletAddress.substring(38)}`
-                                : "Connect Wallet"}
+                            {walletAddress.length > 0 
+                                ? `Connected: ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`
+                                : "Connect Wallet"
+                            }
                         </span>
                     </button>
                 </li>
             </ul>
         </nav>
-    )
+    );
 };
 
-export default Navbar
+export default Navbar;
