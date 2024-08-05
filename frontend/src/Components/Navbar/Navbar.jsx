@@ -3,8 +3,6 @@ import './Navbar.css'
 import metamaskLogo from '../../assets/MetamaskLogo.png'
 import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png'
 import { Link } from 'react-scroll'
-import { NavLink } from 'react-router-dom';
-
 const NAV__LINKS = [
 {
     display: 'Home',
@@ -70,6 +68,7 @@ const Navbar = () => {
             <ul>
                 <li><Link to='hero' smooth={true} offset={0} duration={500}> Home </Link></li>
                 <li><Link to='product' smooth={true} offset={0} duration={500}> Market </Link></li>
+                <li><Link to='Create' smooth={true} offset={0} duration={500}> Create </Link></li>
                 <li><Link to='contact' smooth={true} offset={0} duration={500}> Contact Us </Link></li>
                 <li><button onClick={connectWallet} className='btn btn-light'>
                         <span className='is-link has-text-weight-bold'>
