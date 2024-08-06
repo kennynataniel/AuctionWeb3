@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Create from './Components/Create/Create';
+import ProductDetail from './Components/Product/ProductDetail/ProductDetail';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "remixicon/fonts/remixicon.css";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <Create/>
+  },
+  {
+    path: "/productDetail",
+    element: <ProductDetail/>
   },
 
 ]);
