@@ -8,6 +8,7 @@ import Product from './Components/Product/Product';
 import Contact from './Components/Contact/Contact';
 import Footer from './Components/Footer/Footer';
 import './App.css'
+import 'toastr/build/toastr.min.css';
 
 function App() {
   return (

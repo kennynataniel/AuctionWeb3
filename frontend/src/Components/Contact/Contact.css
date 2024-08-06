@@ -54,17 +54,7 @@
     resize: none;
 }
 
-/* 
-.btndark-btn{
-    background: #FFF;
-    color: #212121;
-    padding: 14px 40px;
-    font-size: 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    border: 0;
-    outline: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  } */
+.contact-col span{
+    display: block;
+    margin: 20px 0;
+}

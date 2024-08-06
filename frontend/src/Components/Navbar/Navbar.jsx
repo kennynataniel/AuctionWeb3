@@ -3,6 +3,7 @@ import './Navbar.css';
 import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
+import { errorNotification } from '../../plugins/Notification';
 
 const Navbar = () => {
     const [sticky, setSticky] = useState(false);
@@ -67,16 +68,16 @@ const Navbar = () => {
             } catch (err) {
                 console.error('Error connecting to MetaMask:', err);
                 if (err.message.includes('User rejected the request')) {
-                    alert('Connection request was rejected by the user.');
+                    errorNotification('Connection request was rejected by the user.');
                 } else {
-                    alert('An error occurred while connecting to MetaMask. Please try again.');
+                    errorNotification('An error occurred while connecting to MetaMask. Please try again.');
                 }
             } finally {
                 setIsRequestPending(false);
             }
         } else {
             console.log("Please install MetaMask");
-            alert('MetaMask is not installed. Please install MetaMask to proceed.');
+            errorNotification('MetaMask is not installed. Please install MetaMask to proceed.');
         }
     };
 
@@ -93,7 +94,11 @@ const Navbar = () => {
                     <ScrollLink to='product' smooth={true} offset={0} duration={500}> Market </ScrollLink>
                 </li>
                 <li>
-                    <RouterLink onClick={connectWallet} className='custom-link' to='/create' > Create </RouterLink>
+                    {walletAddress ? (
+                        <RouterLink className='custom-link' to='/create'> Create </RouterLink>
+                    ) : (
+                        <span onClick={connectWallet} className='custom-link'> Create </span>
+                    )}
                 </li>
                 <li>
                     <ScrollLink to='contact' smooth={true} offset={0} duration={500}> Contact Us </ScrollLink>

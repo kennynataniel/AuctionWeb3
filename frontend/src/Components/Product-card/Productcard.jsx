@@ -2,6 +2,7 @@ import React , {useState} from 'react'
 import ethImg from '../../assets/ETH.png'
 import Modal from '../Modal/Modal'
 import { ethers } from 'ethers';
+import { errorNotification } from '../../plugins/Notification';
 
 const Productcard = (props) => {
 
@@ -32,7 +33,7 @@ const Productcard = (props) => {
   
         setShowModal(true);
     } else {
-        alert('MetaMask is not installed. Please install MetaMask.');
+        errorNotification('MetaMask is not installed. Please install MetaMask.');
     }
   };
 

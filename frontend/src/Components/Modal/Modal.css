@@ -13,7 +13,7 @@
     top:50%;
     left:50%;
     width: 500px;
-    height: 400px;
+    height: 500px;
     transform: translate(-50%,-50%);
     background: #101014 !important;
     border-radius: 5px;
@@ -27,8 +27,14 @@
     margin-bottom: 10px;
 }
 
-.single__modal .money{
-    color: #fff;
+.single__modal .moneyBidder{
+    color: #47f530;
+    font-weight: 500;
+    font-size:  1.1rem;
+}
+
+.accountBidder{
+    color: #47f530;
     font-weight: 500;
     font-size:  1.1rem;
 }
@@ -83,8 +89,14 @@
 .close__modal{
     cursor: pointer;
 }
+.bidder-information{
+    border-bottom: 1px solid #efefef;
+    margin-bottom: 20px;
+}
 
-
+.account,  .money{
+    color: #fff;
+}
 /* Custom-error */
 
 .error-message{

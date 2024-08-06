@@ -1,4 +1,5 @@
 import React from 'react'
+import { successNotification, errorNotification } from '../../plugins/Notification';
 import './Contact.css'
 import msg_item from '../../assets/msg-icon.png'
 import mail_icon from '../../assets/mail-icon.png'
@@ -6,6 +7,33 @@ import phone_icon from '../../assets/phone-icon.png'
 import location_icon from '../../assets/location-icon.png'
 
 const Contact = () => {
+
+  const [result, setResult] = React.useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "064bc6b7-340e-4e45-808b-3e2fd65fee0b");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      successNotification("Success", data)
+      event.target.reset();
+    } else {
+      setResult(data.message);
+      errorNotification("Error", data);
+    }
+  };
+
   return (
     <div className='contact'>
       <div className="contact-col">
@@ -22,7 +50,7 @@ const Contact = () => {
             </ul>
       </div>
       <div className="contact-col">
-        <form>
+        <form onSubmit={onSubmit}>
             <label>Your Name</label>
             <input type="text" name='name' placeholder='Enter your name' required/>
             <label>Phone Number</label>
@@ -32,6 +60,7 @@ const Contact = () => {
             
             <button type="submit" className="btn btn-primary">Submit Now</button>
         </form>
+        <span>{result}</span>
       </div>
     </div>
   )
