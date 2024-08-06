@@ -28,6 +28,19 @@
   color: #61dafb;
 }
 
+/* ===================== CUSTOM SCROLL-BAR ================================== */
+
+::-webkit-scrollbar
+{
+  width: 8px;
+  background: #343444;
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius: 2em;
+  background: linear-gradient(-45deg, #E250E5, #4B50E6, #E250E5, #4B50E6);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
