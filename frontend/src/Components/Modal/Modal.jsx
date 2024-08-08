@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './Modal.css'
+import WalletBalance from '../../api/MetamaskGetData';
 
 const Modal = ({ setShowModal, item }) => {
 
@@ -8,7 +9,8 @@ const Modal = ({ setShowModal, item }) => {
     const [bidValue, setBidValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const highestBidderAccount = "0x1acD91dB45F4728843F8F6d3A263f10953C136uYeL";
-    const yourAccount = "0x57c95B45F4728843F8F6d3A263f10953C136deEd";
+    const [address, setAddress] = useState('');
+    const [balance, setBalance] = useState('');
 
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -51,14 +53,16 @@ const Modal = ({ setShowModal, item }) => {
                     </div>
                 </div>
 
+                <WalletBalance setAddress={setAddress} setBalance={setBalance} setErrorMessage={setErrorMessage} />
+
                 <div className="d-flex align-items-center justify-content-between">
                     <p className="TitleModal">Your Account</p>
-                    <span className="account">{yourAccount.substring(0, 8)}...{yourAccount.substring(30)} </span>
+                    <span className="account">{address.substring(0, 8)}...{address.substring(30)} </span>
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
                     <p className="TitleModal">Balance</p>
-                    <span className="money">0.12314 ETH </span>
+                    <span className="money">{balance} ETH</span>
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
