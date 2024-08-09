@@ -4,14 +4,14 @@ pragma solidity ^0.8.13;
 contract Auction {
     address public owner;
     address public highestBidder;
-    uint public highestBid;
+    uint256 public highestBid; // Updated from uint to uint256
     bool public ended;
 
-    mapping(address => uint) public bids;
+    mapping(address => uint256) public bids; // Updated from uint to uint256
 
     event AuctionStarted();
-    event BidPlaced(address indexed bidder, uint amount);
-    event AuctionEnded(address winner, uint amount);
+   event BidPlaced(address indexed bidder, uint256 amount); // Updated from uint to uint256
+    event AuctionEnded(address winner, uint256 amount); // Updated from uint to uint256
 
     constructor() {
         owner = msg.sender;
@@ -38,7 +38,7 @@ contract Auction {
     }
 
     function withdraw() external returns (bool) {
-        uint amount = bids[msg.sender];
+        uint256  amount = bids[msg.sender];
         if (amount > 0) {
             bids[msg.sender] = 0;
 
