@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Create from './Components/Create/Create';
 import ProductDetail from './Components/Product/ProductDetail/ProductDetail';
+import Marketplace from './Components/ProductPage/products';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "remixicon/fonts/remixicon.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import { AuctionProvider } from './Auction';
 
 import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
 
@@ -24,14 +26,21 @@ const router = createBrowserRouter([
     path: "/productDetail",
     element: <ProductDetail/>
   },
+  {
+    path: "/marketplace",
+    element: <Marketplace/>
+  }
 
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
+  <AuctionProvider>
   <React.StrictMode>
     <RouterProvider router={router}/>
   </React.StrictMode>
+  </AuctionProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

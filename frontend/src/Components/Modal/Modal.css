@@ -13,7 +13,7 @@
     top:50%;
     left:50%;
     width: 500px;
-    height: 500px;
+    height: 600px;
     transform: translate(-50%,-50%);
     background: #101014 !important;
     border-radius: 5px;
@@ -101,4 +101,8 @@
 
 .error-message{
     color:red;
+}
+
+.btn-refresh{
+    margin-left: 10px;
 }

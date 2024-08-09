@@ -1,5 +1,5 @@
 // WalletBalance.js
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { ethers } from 'ethers';
 
 const WalletBalance = ({ setAddress, setBalance, setErrorMessage }) => {
