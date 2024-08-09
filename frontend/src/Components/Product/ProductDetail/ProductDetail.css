@@ -56,3 +56,56 @@
     text-align: center; 
 }
 
+.product-history-bidding {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-history-bidding h5 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .history-item:last-child {
+    border-bottom: none;
+  }
+  
+  .history-address {
+    font-size: 0.875rem;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .history-bid {
+    font-size: 0.875rem;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .sort-headers {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.sortable-header {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sortable-header:hover {
+    text-decoration: underline;
+}

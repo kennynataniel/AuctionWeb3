@@ -91,7 +91,7 @@ const Navbar = () => {
                     </ScrollLink>
                 </li>
                 <li>
-                    <ScrollLink to='product' smooth={true} offset={0} duration={500}> Market </ScrollLink>
+                <RouterLink className='custom-link' to='/marketplace'> Market </RouterLink>
                 </li>
                 <li>
                     {walletAddress ? (

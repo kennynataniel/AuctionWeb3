@@ -2,6 +2,7 @@ import React from 'react'
 import './Hero.css'
 import {Container, Row, Col } from 'reactstrap'
 import heroImg from '../../assets/NFT.png'
+import { Link as RouterLink } from 'react-router-dom';
 
 const Hero = () => {
   
@@ -19,10 +20,12 @@ const Hero = () => {
               meets integrity.</p>
 
             <div className="hero__btns d-flex align-items-center gap-4">
+            <RouterLink className='custom-link' to='/marketplace'> 
               <button className='explore__btn d-flex align-items-center gap-2'>
-                <i class="ri-rocket-line"></i>{" "}
+                <i class="ri-rocket-line"></i>
                 Explore Product
-              </button>
+                </button>
+              </RouterLink>
             </div>
           </div>
         </Col>

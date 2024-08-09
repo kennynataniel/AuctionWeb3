@@ -18,26 +18,51 @@ const Create = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000;
         const startDateMillis = startDate.getTime();
         const endDateMillis = endDate.getTime();
-
+    
         if (startingBid <= 0) {
             setErrorMessage('The starting bid must be greater than 0.');
-        }
-        else if (endDateMillis - startDateMillis < oneWeekInMillis) {
+        } else if (endDateMillis - startDateMillis < oneWeekInMillis) {
             setErrorMessage('The expiration date must be at least one week after the starting date.');
         } else {
-            setErrorMessage('');
-            successNotification('Form submitted');
-            setTimeout(() => {
-                navigate('/');
-            }, 1000);
+            try {
+                setErrorMessage('');
+    
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('startingBid', startingBid);
+                formData.append('startDate', startDate.toISOString());
+                formData.append('endDate', endDate.toISOString());
+                if (file) {
+                    formData.append('file', file);
+                }
+    
+                // Send data to backend
+                const response = await fetch('http://your-backend-api-url/items', {
+                    method: 'POST',
+                    body: formData,
+                });
+    
+                if (response.ok) {
+                    successNotification('Form submitted successfully!');
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1000);
+                } else {
+                    setErrorMessage('Failed to submit form.');
+                }
+            } catch (error) {
+                setErrorMessage('An error occurred while submitting the form.');
+            }
         }
     };
+    
 
     const handleFileChange = (e) => {
         setFile(URL.createObjectURL(e.target.files[0]));
