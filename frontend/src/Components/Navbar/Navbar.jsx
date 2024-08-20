@@ -9,6 +9,7 @@ const Navbar = () => {
     const [sticky, setSticky] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
     const [isRequestPending, setIsRequestPending] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false); // State to handle menu visibility
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,7 +18,6 @@ const Navbar = () => {
         
         window.addEventListener('scroll', handleScroll);
         
-        // Clean up the event listener on component unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -84,14 +84,17 @@ const Navbar = () => {
     return (
         <nav className={`containerNavBar ${sticky ? 'dark-nav' : ''}`}>
             <img src={logo} alt="Logo" className='logo' />
-            <ul>
+            <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+                <div className="hamburger"></div>
+            </div>
+            <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
                 <li>
                     <ScrollLink to='hero' smooth={true} offset={0} duration={500}>
                         <RouterLink className='custom-link' to='/'> Home </RouterLink>
                     </ScrollLink>
                 </li>
                 <li>
-                <RouterLink className='custom-link' to='/marketplace'> Market </RouterLink>
+                    <RouterLink className='custom-link' to='/marketplace'> Market </RouterLink>
                 </li>
                 <li>
                     {walletAddress ? (
