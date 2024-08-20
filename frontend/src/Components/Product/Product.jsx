@@ -12,11 +12,10 @@ const Product = () => {
     <Container>
       <Row>
         {NFT__DATA.slice(0, 4).map((item) => (
-          <Col lg="3">
-            <Productcard key={item.id} item={item} />
+          <Col lg="3" md="4" sm="6" xs="12" key={item.id}>
+            <Productcard item={item} />
           </Col>
         ))}
-
 
         <Col lg="12" className="d-flex justify-content-center align-items-center mb-5">
           <RouterLink className='custom-link' to='/marketplace'>
@@ -25,8 +24,8 @@ const Product = () => {
             </button>
           </RouterLink>
         </Col>
-
       </Row>
+
     </Container>
   </section>
 }

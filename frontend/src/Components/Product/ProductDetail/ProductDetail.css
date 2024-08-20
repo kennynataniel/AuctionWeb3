@@ -109,3 +109,80 @@
 .sortable-header:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+    .productdisplay {
+        flex-direction: column;
+        margin: 10px;
+        padding: 20px 0;
+    }
+
+    .productdisplay-left {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .productdisplay-img-list {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .productdisplay-main-img {
+        max-width: 100%;
+        max-height: 300px;
+    }
+
+    .productdisplay-right {
+        margin: 0;
+        text-align: center;
+    }
+
+    .productdisplay h1 {
+        font-size: 28px;
+    }
+
+    .product-history-bidding {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .product-history-bidding h1 {
+        font-size: 24px;
+    }
+
+    .history-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sort-headers {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .productdisplay {
+        margin: 0px 10px;
+        padding: 10px 0;
+    }
+
+    .productdisplay h1 {
+        font-size: 24px;
+    }
+
+    .product-history-bidding h1 {
+        font-size: 20px;
+    }
+
+    .history-item {
+        padding: 8px 0;
+    }
+
+    .history-address, .history-bid {
+        font-size: 12px;
+    }
+
+    .sortable-header {
+        font-size: 12px;
+    }
+}
