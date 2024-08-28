@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import Create from './Components/Create/Create';
 import ProductDetail from './Components/Product/ProductDetail/ProductDetail';
 import Marketplace from './Components/ProductPage/products';
+import Reward from './Components/Reward/Reward';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "remixicon/fonts/remixicon.css";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/marketplace",
     element: <Marketplace/>
+  },
+  {
+    path: "/reward",
+    element: <Reward/>
   }
 
 ]);

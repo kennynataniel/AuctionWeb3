@@ -3,13 +3,15 @@ import './Navbar.css';
 import logo from '../../assets/BLOCKBIDDERLANDSCAPE.png';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
+import toastr from 'toastr';
 import { errorNotification } from '../../plugins/Notification';
+import '../../custom-toastr.css';
 
 const Navbar = () => {
     const [sticky, setSticky] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
     const [isRequestPending, setIsRequestPending] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false); // State to handle menu visibility
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -49,7 +51,7 @@ const Navbar = () => {
     const connectWallet = async () => {
         if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
             if (isRequestPending) {
-                console.log("Please wait for the current request to complete.");
+                toastr.warning('Please wait for the current request to complete.');
                 return;
             }
 
@@ -61,9 +63,9 @@ const Navbar = () => {
                 if (accounts.length > 0) {
                     setWalletAddress(accounts[0]);
                     localStorage.setItem('walletAddress', accounts[0]);
-                    console.log(`Connected: ${accounts[0]}`);
+                    toastr.success(`Connected: ${accounts[0]}`);
                 } else {
-                    console.log("No accounts found. Connect to MetaMask using the Connect button.");
+                    toastr.info("No accounts found. Connect to MetaMask using the Connect button.");
                 }
             } catch (err) {
                 console.error('Error connecting to MetaMask:', err);
@@ -76,8 +78,7 @@ const Navbar = () => {
                 setIsRequestPending(false);
             }
         } else {
-            console.log("Please install MetaMask");
-            errorNotification('MetaMask is not installed. Please install MetaMask to proceed.');
+            toastr.error('MetaMask is not installed. Please install MetaMask to proceed.');
         }
     };
 
@@ -102,6 +103,9 @@ const Navbar = () => {
                     ) : (
                         <span onClick={connectWallet} className='custom-link'> Create </span>
                     )}
+                </li>
+                <li>
+                    <RouterLink className='custom-link' to='/reward'> Reward </RouterLink>
                 </li>
                 <li>
                     <ScrollLink to='contact' smooth={true} offset={0} duration={500}> Contact Us </ScrollLink>
