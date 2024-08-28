@@ -41,11 +41,11 @@ const Productcard = (props) => {
 
   return <div className="single__nft__card">
     <div className="ntf__img">
-    <RouterLink
-  className='custom-link'
-  to={`/productDetail?title=${title}&currentBid=${currentBid}&imgUrl=${imgUrl}&creator=${creator}&startDate=${startDate}&endDate=${endDate}&description=${description}`}>
-  <img src={imgUrl} alt="" className="w-100" />
-</RouterLink>
+      <RouterLink
+        className='custom-link'
+        to={`/productDetail?title=${title}&currentBid=${currentBid}&imgUrl=${imgUrl}&creator=${creator}&startDate=${startDate}&endDate=${endDate}&description=${description}`}>
+        <img src={imgUrl} alt="" className="w-100" />
+      </RouterLink>
     </div>
 
     <div className="nft__content">

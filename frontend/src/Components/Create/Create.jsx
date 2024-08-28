@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { successNotification} from '../../plugins/Notification';
+import { successNotification } from '../../plugins/Notification';
 import { useNavigate } from 'react-router-dom';
 import CustomDatePicker from '../CustomDatePicker';
 import ProductCardPreview from '../Product-card/ProductcardPreview';
 import Navbar from '../Navbar/Navbar';
+import { ethers } from 'ethers';  // Import ethers.js
 import './Create.css';
 
 import imgDummy from '../../assets/dummy.png';
@@ -15,24 +16,48 @@ const Create = () => {
     const [startingBid, setStartingBid] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [ethBalance, setEthBalance] = useState(null);  // Store user's ETH balance
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Fetch ETH balance from MetaMask
+        const fetchEthBalance = async () => {
+            try {
+                if (window.ethereum) {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const address = await signer.getAddress();
+                    const balance = await provider.getBalance(address);
+                    setEthBalance(ethers.utils.formatEther(balance));
+                } else {
+                    setErrorMessage('Please install MetaMask to continue.');
+                }
+            } catch (error) {
+                setErrorMessage('Failed to fetch ETH balance from MetaMask.');
+            }
+        };
+
+        fetchEthBalance();
+    }, []);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
         const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000;
         const startDateMillis = startDate.getTime();
         const endDateMillis = endDate.getTime();
-    
+
         if (startingBid <= 0) {
             setErrorMessage('The starting bid must be greater than 0.');
         } else if (endDateMillis - startDateMillis < oneWeekInMillis) {
             setErrorMessage('The expiration date must be at least one week after the starting date.');
+        } else if (ethBalance && parseFloat(startingBid) > parseFloat(ethBalance)) {
+            setErrorMessage('Your ETH balance is insufficient for this starting bid. Please ensure your balance is sufficient to cover the bid amount.');
         } else {
             try {
                 setErrorMessage('');
-    
+
                 // Prepare form data
                 const formData = new FormData();
                 formData.append('title', title);
@@ -42,13 +67,13 @@ const Create = () => {
                 if (file) {
                     formData.append('file', file);
                 }
-    
+
                 // Send data to backend
                 const response = await fetch('http://your-backend-api-url/items', {
                     method: 'POST',
                     body: formData,
                 });
-    
+
                 if (response.ok) {
                     successNotification('Form submitted successfully!');
                     setTimeout(() => {
@@ -62,7 +87,6 @@ const Create = () => {
             }
         }
     };
-    
 
     const handleFileChange = (e) => {
         setFile(URL.createObjectURL(e.target.files[0]));
