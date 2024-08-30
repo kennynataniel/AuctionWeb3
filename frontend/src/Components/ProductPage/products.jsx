@@ -17,7 +17,6 @@ export const Marketplace = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState(""); // New state for search term
 
-
   useEffect(() => {
     // Set the course data from imported dummy data
     setCourse(NFT__DATA);
@@ -43,7 +42,18 @@ export const Marketplace = () => {
     setCurrentPage(selected);
   };
 
-  const currentProducts = course; // Adjust this line to filter products as needed
+  // Filter products based on category, price, and search term
+  const filteredProducts = course
+    .filter(item =>
+      (!selectedCategory || item.category === selectedCategory) &&
+      (!minPrice || item.price >= parseFloat(minPrice)) &&
+      (!maxPrice || item.price <= parseFloat(maxPrice)) &&
+      (!searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+
+  // Pagination
+  const offset = currentPage * itemsPerPage;
+  const currentProducts = filteredProducts.slice(offset, offset + itemsPerPage);
 
   return (
     <>
@@ -60,18 +70,25 @@ export const Marketplace = () => {
         <div className="row">
           <div className="col-12 col-lg-3 mb-3">
             <p className="text-muted small mb-2">Search</p>
-            <form id="formFilter" method="get">
+            <form id="formFilter" method="get" onSubmit={(e) => e.preventDefault()}>
               <div className="input-group mb-3">
                 <input
                   className="form-control"
                   type="search"
                   aria-label="search-input"
                   placeholder="Find according to the category"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                 />
                 <div className="input-group-append">
-                  <span className="input-group-text bg-white" id="search-addon">
+                  <button
+                    className="input-group-text bg-white"
+                    id="search-addon"
+                    type="button"
+                    onClick={() => setCurrentPage(0)} // Reset to first page on search
+                  >
                     <Icon.Search />
-                  </span>
+                  </button>
                 </div>
               </div>
             </form>
@@ -150,7 +167,7 @@ export const Marketplace = () => {
               previousLabel={"<"}
               nextLabel={">"}
               breakLabel={"..."}
-              pageCount={Math.ceil(currentProducts.length / itemsPerPage)}
+              pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
               onPageChange={handlePageClick}
               containerClassName={"pagination"}
               activeClassName={"active"}
@@ -170,7 +187,6 @@ export const Marketplace = () => {
         </div>
       </div>
 
-      
     </>
   );
 };

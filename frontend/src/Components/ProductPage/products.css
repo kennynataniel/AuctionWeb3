@@ -1,3 +1,69 @@
+/* General Marketplace Styling */
+.marketplace {
+    padding-top: 80px;
+    color: #333;
+}
+
+.marketplace h5 {
+    font-weight: 700;
+    color: #dcc9e2;
+    margin-bottom: 20px;
+}
+
+.marketplace p.small {
+    font-size: 1rem;
+    color: #040404;
+    margin-bottom: 20px;
+}
+
+/* Filter Category Styling */
+.text-muted {
+    font-weight: 600;
+    color: #5142fc;
+}
+
+.form-check-label {
+    font-size: 1rem;
+    color: #777;
+}
+
+.form-check-input:checked {
+    background-color: #5142fc;
+    border-color: #5142fc;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination .active a {
+    background-color: #5142fc;
+    color: #fff;
+    border-radius: 50%;
+    padding: 8px 12px;
+}
+
+.pagination a {
+    color: #5142fc;
+    padding: 8px 12px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #5142fc;
+    color: #fff;
+}
 
 .single__nft__card{
     padding: 10px;
@@ -83,3 +149,4 @@
 .input-group-text:hover{
     cursor: pointer;
 }
+

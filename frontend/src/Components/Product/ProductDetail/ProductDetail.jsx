@@ -13,8 +13,6 @@ const ProductDetail = () => {
     const currentBid = searchParams.get('currentBid') || '0';
     const imgUrl = searchParams.get('imgUrl') || 'default_image_url.jpg';
     const creator = searchParams.get('creator') || 'Unknown Creator';
-    const startDate = searchParams.get('startDate') || 'Unknown';
-    const endDate = searchParams.get('endDate') || 'Unknown';
     const description = searchParams.get('description') || 'Unknown';
 
     // State management
