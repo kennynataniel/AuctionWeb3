@@ -97,13 +97,11 @@ const Navbar = () => {
                 <li>
                     <RouterLink className='custom-link' to='/marketplace'> Market </RouterLink>
                 </li>
-                <li>
-                    {walletAddress ? (
+                {walletAddress && (
+                    <li>
                         <RouterLink className='custom-link' to='/create'> Create </RouterLink>
-                    ) : (
-                        <span onClick={connectWallet} className='custom-link'> Create </span>
-                    )}
-                </li>
+                    </li>
+                )}
                 <li>
                     <RouterLink className='custom-link' to='/reward'> Reward </RouterLink>
                 </li>
