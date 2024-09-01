@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import './Modal.css'
+import React, { useState, useEffect } from 'react';
+import './Modal.css';
 import WalletBalance from '../../api/MetamaskGetData';
 import { useAuction } from '../../Auction';
 import fetchTransactionDetails from '../../api/RefreshPrice.js';
@@ -14,10 +14,9 @@ const Modal = ({ setShowModal, item }) => {
     const [balance, setBalance] = useState('');
     const [currentAddressState, setCurrentAddressState] = useState(creator);
     const [currentBidState, setCurrentBidState] = useState(currentBid);
-    const [refreshed, setRefreshed] = useState(false); // New state to track refresh
+    const [loading, setLoading] = useState(false); // Loading state
 
-
-    const { placeBid, highestBidder } = useAuction();
+    const { placeBid } = useAuction();
 
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -25,12 +24,6 @@ const Modal = ({ setShowModal, item }) => {
     };
 
     const handleSubmit = async () => {
-
-        if (!refreshed) {
-            setErrorMessage('Please click "Refresh" to update the bid information before placing a bid.');
-            return;
-        }
-
         const numericBidValue = parseFloat(bidValue);
         const numericCurrentBid = parseFloat(currentBidState);
 
@@ -42,25 +35,27 @@ const Modal = ({ setShowModal, item }) => {
                 setErrorMessage('');
                 setShowModal(false);
             } catch (error) {
-                setErrorMessage(error);
+                setErrorMessage(error.message);
             }
         }
     };
 
     const handleRefreshPrice = async () => {
+        setLoading(true); // Start loading
         try {
-            // Fetch the highest transaction details once
             const { value: highestBidValue, address: highestBidAddress } = await fetchTransactionDetails();
-
-            // Update the state with the highest bid value and address
             setCurrentBidState(highestBidValue);
             setCurrentAddressState(highestBidAddress);
-
-            setRefreshed(true);
         } catch (error) {
             console.error('Error fetching the highest bid:', error);
+        } finally {
+            setLoading(false); // End loading
         }
     };
+
+    useEffect(() => {
+        handleRefreshPrice(); // Fetch data when the modal is opened
+    }, []);
 
     const formatAddress = (addr) => {
         if (addr && addr.length > 12) {
@@ -73,25 +68,19 @@ const Modal = ({ setShowModal, item }) => {
         <div className="modal__wrapper">
             <div className="single__modal">
                 <span className="close__modal">
-                    <i class="ri-close-line" onClick={() => setShowModal(false)}></i>
+                    <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
                 </span>
                 <h6 className="text-center text-light">Place a Bid - {title}</h6>
                 <p className="text-center text-light">
-                    Highest Bid <span className="moneyBidder">{currentBidState} ETH</span></p>
+                    Highest Bid <span className="moneyBidder">{loading ? (
+                        <span className="loading-spinner"></span> // Loading spinner
+                    ) : (
+                        `${currentBidState} ETH`
+                    )}</span></p>
                 <div className="input__item mb-4">
                     <input type="number" placeholder='00 : 00 ETH' value={bidValue} onChange={handleInputChange} />
                 </div>
                 <div className='bidder-information'>
-                    <div className="d-flex align-items-center justify-content-between">
-                        <p className="TitleModal">Highest Bid</p>
-                        <span className="moneyBidder">
-                            {currentBidState} ETH
-                            <button className="place__bid-btn btn-refresh" onClick={handleRefreshPrice}>
-                                Refresh
-                            </button>
-                        </span>
-                    </div>
-
                     <div className="d-flex align-items-center justify-content-between">
                         <p className="TitleModal">Highest Bidder</p>
                         <span className="accountBidder"> {formatAddress(currentAddressState)}</span>
@@ -124,8 +113,7 @@ const Modal = ({ setShowModal, item }) => {
                 </button>
             </div>
         </div>
-
     )
 }
 
-export default Modal
+export default Modal;

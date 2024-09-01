@@ -21,8 +21,10 @@ const fetchTransactionDetails = async () => {
 
         // Filter transactions to include only those with the 'bid' method
         const bidTransactions = transactions.filter(tx => {
-            return tx.decoded_input && tx.decoded_input.method_call === 'bid()';
+            return tx.decoded_input && tx.decoded_input.method_call === 'bid()' && tx.result === 'success';
         });
+
+        console.log('full json:', bidTransactions);
 
         // Extract desired details from each 'bid' transaction
         const transactionDetails = bidTransactions.map(tx => ({
